@@ -1,0 +1,9 @@
+[submodule "backend"]
+	path = backend
+	url = https://github.com/bined-tmp/bined-backend.git
+[submodule "frontend"]
+	path = frontend
+	url = https://github.com/bined-tmp/bined-frontend.git
+[submodule "hasura"]
+	path = hasura
+	url = https://github.com/bined-tmp/bined-hasura.git
