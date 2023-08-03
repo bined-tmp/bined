@@ -85,7 +85,7 @@ docker-compose -f docker-compose-db-hasura.yml up
 docker-compose -f docker-compose-backend.yml run --rm backend npm run migration:run
 ```
 
-### 8. Hasura の metadata を apply する
+### 8. Hasura の metadata の apply
 
 ```bash
 cd hasura && hasura metadata apply --admin-secret=password && cd ../
