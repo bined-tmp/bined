@@ -2,8 +2,8 @@
 
 ### 0. graphql-codegen の設定について
 
-graphql-codegen の設定は `frontend/codegen.yml` に記載されている。  
-インストールしたプラグインは下記の通り。
+graphql-codegen の設定は `frontend/codegen.yml` に記載されています。  
+インストールしたプラグインは下記の通りです。
 
 - `typescript`（GraphQL のスキーマに基づいて、ベースとなる TypeScript の型を生成する。）
 - `typescript-operations`（GraphQL のスキーマと GraphQL の操作とフラグメントに基づいて TypeScript の型を生成する。具体的には Query、Mutation、Subscription、Fragment である。）
@@ -11,7 +11,7 @@ graphql-codegen の設定は `frontend/codegen.yml` に記載されている。
 
 ### 1. クエリ or ミューテーションの追加
 
-TypeScript の型を生成したい Query、もしくは Mutation を追加する。
+TypeScript の型を生成したい Query、もしくは Mutation を追加してください。
 
 例. `frontend/src/graphql/queries/users.graphql` を作成した場合
 
@@ -27,7 +27,7 @@ query SelectUniqueUserByEmail($email: String!) {
 
 ### 2. graphql-codegen を使ったコードの自動生成について
 
-下記コマンドを実行すると、先ほど追加した Query、もしくは Mutation に対する TypeScript の型が自動で生成される。  
+下記コマンドを実行すると、先ほど追加した Query、もしくは Mutation に対する TypeScript の型が自動で生成されます。  
 カレントディレクトリが `bined` であることを想定しています。
 
 ```bash
