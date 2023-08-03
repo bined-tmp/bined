@@ -1,0 +1,15 @@
+version: "3.8"
+services:
+  frontend:
+    build:
+      context: ./frontend
+    restart: always
+    ports:
+      - 3000:3000
+    environment:
+      HASURA_GQL_URL: http://graphql-engine:8080/v1/graphql
+      HASURA_ADMIN_SECRET: password
+    command: npm run dev
+    volumes:
+      - ./frontend:/frontend
+      - ./frontend/node_modules:/frontend/node_modules

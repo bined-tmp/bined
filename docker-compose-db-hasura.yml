@@ -1,0 +1,45 @@
+version: "3.8"
+services:
+  postgres:
+    image: postgres:15
+    ports:
+      - "5432:5432"
+    restart: always
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: hasurapassword
+      POSTGRES_USER: hasurauser
+      POSTGRES_DB: hasuradefault
+  graphql-engine:
+    image: hasura/graphql-engine:v2.30.1
+    ports:
+      - "8080:8080"
+    restart: always
+    environment:
+      HASURA_GRAPHQL_METADATA_DATABASE_URL: postgres://hasurauser:hasurapassword@postgres:5432/hasuradefault
+      PG_DATABASE_URL: postgres://hasurauser:hasurapassword@postgres:5432/hasuradefault
+      HASURA_GRAPHQL_ENABLE_CONSOLE: "true"
+      HASURA_GRAPHQL_DEV_MODE: "true"
+      HASURA_GRAPHQL_ENABLED_LOG_TYPES: startup, http-log, webhook-log, websocket-log, query-log
+      HASURA_GRAPHQL_ADMIN_SECRET: password
+      HASURA_GRAPHQL_JWT_SECRET: '{ "type": "HS256", "key": "verysecretandlonghasuragraphqljwtsecret" }'
+    depends_on:
+      data-connector-agent:
+        condition: service_healthy
+  data-connector-agent:
+    image: hasura/graphql-data-connector:v2.30.1
+    restart: always
+    ports:
+      - 8081:8081
+    environment:
+      QUARKUS_LOG_LEVEL: ERROR
+      QUARKUS_OPENTELEMETRY_ENABLED: "false"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8081/api/v1/athena/health"]
+      interval: 5s
+      timeout: 10s
+      retries: 5
+      start_period: 5s
+volumes:
+  db_data:
