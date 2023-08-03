@@ -2,13 +2,20 @@
 
 ## 環境構築
 
-### 本レポジトリのクローン
+下記の通りコマンドを実行してください。
+
+### 注意点
+
+- ディレクトリの移動についてもコマンドに含まれています。
+- `.env` ファイルに適切な環境変数を設定してください。
+
+### 1. 本レポジトリのクローン
 
 ```bash
 git clone git@github.com:bined-tmp/bined.git
 ```
 
-### サブモジュールの更新
+### 2. サブモジュールの更新
 
 ```bash
 cd bined
@@ -18,7 +25,7 @@ cd bined
 git submodule update --init --recursive
 ```
 
-### ブランチの更新
+### 3. ブランチの更新
 
 #### Backend
 
@@ -38,7 +45,7 @@ cd frontend && git switch main && git pull origin main && cd ../
 cd hasura && git switch main && git pull origin main && cd ../
 ```
 
-### env ファイルのコピー
+### 4. env ファイルのコピー
 
 #### Backend
 
@@ -52,7 +59,7 @@ cp ./backend/.env.example ./backend/.env
 cp ./frontend/.env.example ./frontend/.env
 ```
 
-### パッケージのインストール
+### 5. パッケージのインストール
 
 #### Backend
 
@@ -62,29 +69,29 @@ docker-compose -f docker-compose-backend.yml run --rm backend npm ci
 
 #### Frontend
 
-```
+```bash
 docker-compose -f docker-compose-frontend.yml run --rm frontend npm ci
 ```
 
-### PostgreSQL・Hasura GraphQL Engine の立ち上げ
+### 6. PostgreSQL・Hasura GraphQL Engine の立ち上げ
 
 ```bash
 docker-compose -f docker-compose-db-hasura.yml up
 ```
 
-### TypeORM によるマイグレーション
+### 7. TypeORM によるマイグレーション
 
 ```bash
 docker-compose -f docker-compose-backend.yml run --rm backend npm run migration:run
 ```
 
-### Hasura の metadata を apply する
+### 8. Hasura の metadata を apply する
 
 ```bash
 cd hasura && hasura metadata apply --admin-secret=password && cd ../
 ```
 
-### アプリケーションの立ち上げ
+### 9. アプリケーションの立ち上げ
 
 ```bash
 docker-compose -f docker-compose-backend.yml -f docker-compose-frontend.yml up
