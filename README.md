@@ -91,7 +91,29 @@ docker-compose -f docker-compose-backend.yml run --rm backend npm run migration:
 cd hasura && hasura metadata apply --admin-secret=password && cd ../
 ```
 
-### 9. アプリケーションの立ち上げ
+### 9. 関数を作成する SQL 文の実行
+
+`http://localhost:8080/console/data/sql` にアクセスして、下記の SQL 文を実行する。
+
+```sql
+CREATE OR REPLACE FUNCTION update_email_verified()
+RETURNS TRIGGER AS $$
+BEGIN
+  RAISE NOTICE 'NEW record: %', NEW;
+  UPDATE users
+  SET "emailVerified" = NOW()
+  WHERE id = NEW."userId";
+
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER trigger_update_email_verified
+AFTER INSERT ON accounts
+FOR EACH ROW EXECUTE PROCEDURE update_email_verified();
+```
+
+### 10. アプリケーションの立ち上げ
 
 ```bash
 docker-compose -f docker-compose-backend.yml -f docker-compose-frontend.yml up
