@@ -93,7 +93,7 @@ cd hasura && hasura metadata apply --admin-secret=password && cd ../
 
 ### 9. 関数を作成する SQL 文の実行
 
-`http://localhost:8080/console/data/sql` にアクセスして、下記の SQL 文を実行する。
+http://localhost:8080/console/data/sql にアクセスして、下記の SQL 文を実行する。
 
 ```sql
 CREATE OR REPLACE FUNCTION update_email_verified()
